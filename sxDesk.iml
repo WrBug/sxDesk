@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" name="json-lib-2.2.3-jdk15" level="project" />
+    <orderEntry type="library" name="commons-beanutils-1.7.0" level="project" />
   </component>
 </module>
-

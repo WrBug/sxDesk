@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sxdesk" default="compile.module.sxdesk">
+  <dirname property="module.sxdesk.basedir" file="${ant.file.module_sxdesk}"/>
+  
+  <property name="module.jdk.home.sxdesk" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.sxdesk" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.sxdesk" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.sxdesk" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="sxdesk.output.dir" value="${module.sxdesk.basedir}/out/production/sxDesk"/>
+  <property name="sxdesk.testoutput.dir" value="${module.sxdesk.basedir}/out/test/sxDesk"/>
+  
+  <path id="sxdesk.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sxdesk.module.production.classpath">
+    <path refid="${module.jdk.classpath.sxdesk}"/>
+    <path refid="library.gson-2.2.4.classpath"/>
+  </path>
+  
+  <path id="sxdesk.runtime.production.module.classpath">
+    <pathelement location="${sxdesk.output.dir}"/>
+    <path refid="library.gson-2.2.4.classpath"/>
+  </path>
+  
+  <path id="sxdesk.module.classpath">
+    <path refid="${module.jdk.classpath.sxdesk}"/>
+    <pathelement location="${sxdesk.output.dir}"/>
+    <path refid="library.gson-2.2.4.classpath"/>
+  </path>
+  
+  <path id="sxdesk.runtime.module.classpath">
+    <pathelement location="${sxdesk.testoutput.dir}"/>
+    <pathelement location="${sxdesk.output.dir}"/>
+    <path refid="library.gson-2.2.4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sxdesk">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sxdesk">
+    <patternset refid="excluded.from.module.sxdesk"/>
+  </patternset>
+  
+  <path id="sxdesk.module.sourcepath">
+    <dirset dir="${module.sxdesk.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sxdesk" depends="compile.module.sxdesk.production,compile.module.sxdesk.tests" description="Compile module sxDesk"/>
+  
+  <target name="compile.module.sxdesk.production" depends="register.custom.compilers" description="Compile module sxDesk; production classes">
+    <mkdir dir="${sxdesk.output.dir}"/>
+    <javac2 destdir="${sxdesk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sxdesk}/javac">
+      <compilerarg line="${compiler.args.sxdesk}"/>
+      <bootclasspath refid="sxdesk.module.bootclasspath"/>
+      <classpath refid="sxdesk.module.production.classpath"/>
+      <src refid="sxdesk.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sxdesk"/>
+    </javac2>
+    
+    <copy todir="${sxdesk.output.dir}">
+      <fileset dir="${module.sxdesk.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sxdesk.tests" depends="register.custom.compilers,compile.module.sxdesk.production" description="compile module sxDesk; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sxdesk" description="cleanup module">
+    <delete dir="${sxdesk.output.dir}"/>
+    <delete dir="${sxdesk.testoutput.dir}"/>
+  </target>
+</project>
