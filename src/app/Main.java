@@ -7,10 +7,13 @@ import app.model.bean.IpConfig;
 import app.pane.AboutPane;
 import app.pane.RouterPane;
 import app.pane.ShanXunSettingPane;
+import app.utils.Constant;
 import app.utils.TextUtil;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.*;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -45,7 +48,7 @@ public class Main extends Application implements Event {
         enableTray(primaryStage);
         primaryStage.setIconified(false);
         primaryStage.initStyle(UTILITY);
-        primaryStage.setTitle("闪讯wifi助手");
+        primaryStage.setTitle(Constant.APP_NAME + " " + Constant.APP_VERSION);
         borderPane = new BorderPane();
         borderPane.setTop(getTab());
         setFootView();
@@ -61,6 +64,7 @@ public class Main extends Application implements Event {
             primaryStage.hide();
         });
     }
+
     private void setFootView() {
         actiontarget = new Text();
         actiontarget.setText("未使用");
@@ -155,7 +159,7 @@ public class Main extends Application implements Event {
             SystemTray tray = SystemTray.getSystemTray();
             BufferedImage image = ImageIO.read(Res.class.getResourceAsStream("ic_launcher.png"));
             trayIcon = new TrayIcon(image, "", popupMenu);
-            trayIcon.setToolTip("闪讯wifi助手");
+            trayIcon.setToolTip(Constant.APP_NAME);
             tray.add(trayIcon);
             trayIcon.addMouseListener(sj);
 
