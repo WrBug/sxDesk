@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="sxDesk:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/sxDesk_jar</output-path>
-    <root id="archive" name="sxDesk.jar">
-      <element id="module-output" name="sxDesk" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/gson-2.2.4.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

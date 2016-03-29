@@ -32,7 +32,7 @@ public class RouterPane extends GridPane implements EventHandler<ActionEvent> {
         setAlignment(Pos.CENTER);
         setHgap(10);
         setVgap(10);
-        setPadding(new Insets(25, 25, 25, 25));
+        setPadding(new Insets(0, 25, 0, 25));
 
         Label label = new Label("路由器地址：");
         add(label, 0, 1);

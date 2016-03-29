@@ -11,7 +11,6 @@ import app.utils.TextUtil;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -20,7 +19,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import res.Res;
 
 import javax.imageio.ImageIO;
@@ -29,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+
+import static javafx.stage.StageStyle.UTILITY;
 
 public class Main extends Application implements Event {
     Tab dialTab;
@@ -42,24 +42,25 @@ public class Main extends Application implements Event {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        enableTray(primaryStage);
+        enableTray(primaryStage);
+        primaryStage.setIconified(false);
+        primaryStage.initStyle(UTILITY);
         primaryStage.setTitle("闪讯wifi助手");
         borderPane = new BorderPane();
         borderPane.setTop(getTab());
         setFootView();
         borderPane.setBottom(actiontarget);
-        Scene scene = new Scene(borderPane, 300, 250);
+        Scene scene = new Scene(borderPane, 350, 250);
         primaryStage.setScene(scene);
-//        primaryStage.setMaxWidth(400);
-//        primaryStage.setMaxHeight(250);
+        primaryStage.setMaxWidth(350);
+        primaryStage.setMaxHeight(250);
         primaryStage.getIcons().add(new Image(Res.class.getResourceAsStream("ic_launcher.png")));
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {
-            SystemTray.getSystemTray().remove(trayIcon);
-            Platform.exit();
+            event.consume();
+            primaryStage.hide();
         });
     }
-
     private void setFootView() {
         actiontarget = new Text();
         actiontarget.setText("未使用");
@@ -100,22 +101,22 @@ public class Main extends Application implements Event {
 
     private void enableTray(final Stage stage) {
         PopupMenu popupMenu = new PopupMenu();
-        java.awt.MenuItem openItem = new java.awt.MenuItem("Show");
-        java.awt.MenuItem hideItem = new java.awt.MenuItem("Hide");
+//        java.awt.MenuItem openItem = new java.awt.MenuItem("Show");
+//        java.awt.MenuItem hideItem = new java.awt.MenuItem("Hide");
         java.awt.MenuItem quitItem = new java.awt.MenuItem("Exit");
+        Platform.setImplicitExit(false);
         ActionListener acl = e -> {
             MenuItem item = (MenuItem) e.getSource();
-            Platform.setImplicitExit(false);
 
             if (item.getLabel().equals("Exit")) {
                 SystemTray.getSystemTray().remove(trayIcon);
                 Platform.exit();
                 return;
             }
-            if (item.getLabel().equals("Show")) Platform.runLater(() -> stage.show());
-            if (item.getLabel().equals("Hide")) {
-                Platform.runLater(() -> stage.hide());
-            }
+//            if (item.getLabel().equals("Show")) Platform.runLater(() -> stage.show());
+//            if (item.getLabel().equals("Hide")) {
+//                Platform.runLater(() -> stage.hide());
+//            }
 
         };
         MouseListener sj = new MouseListener() {
@@ -143,12 +144,12 @@ public class Main extends Application implements Event {
             }
         };
 
-        openItem.addActionListener(acl);
+//        openItem.addActionListener(acl);
         quitItem.addActionListener(acl);
-        hideItem.addActionListener(acl);
+//        hideItem.addActionListener(acl);
 
-        popupMenu.add(openItem);
-        popupMenu.add(hideItem);
+//        popupMenu.add(openItem);
+//        popupMenu.add(hideItem);
         popupMenu.add(quitItem);
         try {
             SystemTray tray = SystemTray.getSystemTray();
@@ -180,11 +181,8 @@ public class Main extends Application implements Event {
                 tabPane.getSelectionModel().select(dialTab);
                 break;
             case DIAL:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        doDial();
-                    }
+                new Thread(() -> {
+                    doDial();
                 }).start();
                 break;
             case SENDHEART:

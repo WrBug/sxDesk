@@ -20,7 +20,7 @@ public class ShanXunManager extends Api {
     private static HeartPack heartPack;
 
     public static boolean doDial() {
-        return true;
+        return dial();
     }
 
     public static String getIp() {
@@ -51,7 +51,7 @@ public class ShanXunManager extends Api {
             }
             event.appendCount(sendTotal, successTotal);
             try {
-                Thread.sleep(3000 * 5);
+                Thread.sleep(3000 * 60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

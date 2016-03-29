@@ -28,7 +28,6 @@ public class FileUtil {
         } catch (Exception e) {
             return new Config();
         }
-        ExceptionUtil.putException(String.valueOf(!TextUtil.isEmpty(res)));
         if (!TextUtil.isEmpty(res)) {
             Gson gson = new Gson();
             Config config = gson.fromJson(res, Config.class);
@@ -68,7 +67,6 @@ public class FileUtil {
             fout.write(bytes);
             fout.close();
         } catch (Exception e) {
-            ExceptionUtil.putException(e);
         }
     }
 }

@@ -1,7 +1,5 @@
 package app.pane;
 
-import app.utils.ExceptionUtil;
-import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -28,19 +26,16 @@ public class ShanXunSettingPane extends GridPane implements EventHandler<ActionE
 
     private ShanXunSettingPane(Event event) {
         this.event = event;
-        ExceptionUtil.putException("1");
         config = FileUtil.readConfig();
-        ExceptionUtil.putException("2");
         setAlignment(Pos.CENTER);
         setHgap(10);
         setVgap(10);
-        setPadding(new Insets(25, 25, 0, 25));
+        setPadding(new Insets(0, 25, 0, 25));
         Label userName = new Label("闪讯账号:");
         add(userName, 0, 1);
         userTextField = new TextField();
         userTextField.setText(config.getSxAcount());
         add(userTextField, 1, 1);
-        ExceptionUtil.putException("2");
         Label pw = new Label("闪讯密码:");
         add(pw, 0, 2);
         pwBox = new TextField();
