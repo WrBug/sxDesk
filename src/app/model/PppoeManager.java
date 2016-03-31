@@ -3,12 +3,10 @@ package app.model;
 import app.model.bean.Config;
 import app.utils.CMD;
 import app.utils.FileUtil;
-import app.utils.Pin;
-import app.utils.SystemUtil;
 import res.Res;
 
 import java.io.File;
-import java.net.URL;
+import java.io.InputStream;
 
 /**
  * Created by wangtao on 2016-03-31.
@@ -19,8 +17,9 @@ public class PPPOEManager extends Api {
         String sxAcount = config.getSxAcount();
         String password = config.getSxPassword();
         try {
-            URL url = Res.class.getResource("pppoe.pbk");
-            File file = new File(url.getPath());
+            InputStream is = Res.class.getResourceAsStream("pppoe.pbk");
+            File file = new File("pppoe");
+            FileUtil.inputstream2file(is, file);
             sxAcount = getFinalUser(sxAcount);
             String adslCmd = "rasdial  \"闪讯拨号\" " + sxAcount + " "
                     + password + "  /phonebook:" + file.getPath();

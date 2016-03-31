@@ -3,9 +3,7 @@ package app.utils;
 import com.google.gson.Gson;
 import app.model.bean.Config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 
 /**
  * Created by Administrator on 2016/3/28.
@@ -67,6 +65,21 @@ public class FileUtil {
             fout.write(bytes);
             fout.close();
         } catch (Exception e) {
+        }
+    }
+
+    public static void inputstream2file(InputStream ins, File file) {
+        try {
+            OutputStream os = new FileOutputStream(file);
+            int bytesRead = 0;
+            byte[] buffer = new byte[8192];
+            while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.close();
+            ins.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
