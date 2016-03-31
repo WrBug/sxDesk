@@ -4,12 +4,13 @@
 [https://github.com/WrBug/wtshanxun](https://github.com/WrBug/wtshanxun)
 ## 介绍
 闪讯wifi助手桌面版是一款破解浙江校园闪讯网络的免费拨号器，使用该软件可以让大多数老版的TP-LINK、水星等路由器路由器连上网络，软件自带心跳，解决某些学校的心跳验证。
-
+## 更新地址：
+[http://www.mandroid.cn](http://www.mandroid.cn)
 ## 开发环境：
 开发工具: intellij idea
 java环境：JDK/JRE 7+
 ## 软件截图
-![](http://www.mandroid.cn/upload/2016/03/20160329235451.png)![](http://www.mandroid.cn/upload/2016/03/20160329235439.png)![](http://www.mandroid.cn/upload/2016/03/20160329235433.png)
+![](https://github.com/WrBug/sxDesk/blob/master/20160329235451.png)![](https://github.com/WrBug/sxDesk/blob/master/20160329235439.png)![](https://github.com/WrBug/sxDesk/blob/master/20160329235433.png)
 
 ## 心跳接口：
 ### request
