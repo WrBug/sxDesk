@@ -1,5 +1,7 @@
 package app.pane;
 
+import app.model.PPPOEManager;
+import app.utils.SystemUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,15 +18,15 @@ import app.utils.TextUtil;
 /**
  * Created by wangtao on 2016-03-28.
  */
-public class ShanXunSettingPane extends GridPane implements EventHandler<ActionEvent> {
-    private static ShanXunSettingPane instance;
+public class DialPane extends GridPane implements EventHandler<ActionEvent> {
+    private static DialPane instance;
     TextField userTextField;
     TextField pwBox;
     Config config;
     CheckBox checkBox;
     private Event event;
 
-    private ShanXunSettingPane(Event event) {
+    private DialPane(Event event) {
         this.event = event;
         config = FileUtil.readConfig();
         setAlignment(Pos.CENTER);
@@ -35,30 +37,34 @@ public class ShanXunSettingPane extends GridPane implements EventHandler<ActionE
         add(userName, 0, 1);
         userTextField = new TextField();
         userTextField.setText(config.getSxAcount());
-        add(userTextField, 1, 1);
+        add(userTextField, 1, 1, 2, 1);
         Label pw = new Label("闪讯密码:");
         add(pw, 0, 2);
         pwBox = new TextField();
         pwBox.setText(config.getSxPassword());
         pwBox.setCache(true);
-        add(pwBox, 1, 2);
+        add(pwBox, 1, 2, 2, 1);
 
         checkBox = new CheckBox("发送心跳");
         checkBox.setSelected(config.getSendHeartBoolean());
         add(checkBox, 0, 3);
 
-        Button btn = new Button("拨号");
+        Button btn = new Button("本地拨号");
         btn.setOnAction(this);
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        add(hbBtn, 1, 3);
+
+        btn = new Button("路由器拨号");
+        btn.setOnAction(this);
+        hbBtn.getChildren().add(btn);
+        add(hbBtn, 2, 3);
 
     }
 
-    public static ShanXunSettingPane instance(Event event) {
+    public static DialPane instance(Event event) {
         if (instance == null) {
-            instance = new ShanXunSettingPane(event);
+            instance = new DialPane(event);
         }
         return instance;
     }
@@ -77,10 +83,27 @@ public class ShanXunSettingPane extends GridPane implements EventHandler<ActionE
         c.setSendHeart(checkBox.isSelected());
         FileUtil.writeConfig(c);
         config = FileUtil.readConfig();
+        String name = ((Button) event.getSource()).getText();
+        if ("路由器拨号".equals(name)) {
+            routerDial();
+        } else if ("本地拨号".equals(name)) {
+            pppoeDial();
+        }
+    }
+
+    private void pppoeDial() {
+        if (!SystemUtil.isWindows()) {
+            event.setFootView("本地拨号不支持" + SystemUtil.getOSname() + "系统");
+            return;
+        }
+        this.event.action(Action.PPPOEDIAL);
+    }
+
+    private void routerDial() {
         if (TextUtil.isEmpty(config.getRouterPassword(), config.getRouterIpAddress(), config.getRouterUsername())) {
             this.event.action(Action.CHECKROUTER);
             return;
         }
-        this.event.action(Action.DIAL);
+        this.event.action(Action.ROUTERDIAL);
     }
 }

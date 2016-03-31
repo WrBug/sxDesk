@@ -101,7 +101,7 @@ public class Api {
 
     }
 
-    private static String getFinalUser(String sxAcount) {
+    protected static String getFinalUser(String sxAcount) {
         String after = Pin.getpin(sxAcount.getBytes());
         String yhm = Sto16.bin2hex(after);
         return yhm;

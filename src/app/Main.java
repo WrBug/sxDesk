@@ -2,18 +2,17 @@ package app;
 
 import app.model.Action;
 import app.model.Event;
+import app.model.PPPOEManager;
 import app.model.ShanXunManager;
 import app.model.bean.IpConfig;
 import app.pane.AboutPane;
 import app.pane.RouterPane;
-import app.pane.ShanXunSettingPane;
+import app.pane.DialPane;
 import app.utils.Constant;
 import app.utils.TextUtil;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.*;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -77,7 +76,7 @@ public class Main extends Application implements Event {
         dialTab = new Tab("拨号");
         dialTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == true) {
-                borderPane.setCenter(ShanXunSettingPane.instance(Main.this));
+                borderPane.setCenter(DialPane.instance(Main.this));
             }
         });
         dialTab.setClosable(false);
@@ -184,9 +183,14 @@ public class Main extends Application implements Event {
                 setFootView("已保存");
                 tabPane.getSelectionModel().select(dialTab);
                 break;
-            case DIAL:
+            case ROUTERDIAL:
                 new Thread(() -> {
-                    doDial();
+                    doRouterDial();
+                }).start();
+                break;
+            case PPPOEDIAL:
+                new Thread(() -> {
+                    doPPPOEDial();
                 }).start();
                 break;
             case SENDHEART:
@@ -194,21 +198,32 @@ public class Main extends Application implements Event {
         }
     }
 
-    private void doDial() {
+    private void doPPPOEDial() {
+        setFootView("正在建立连接.");
+        if (PPPOEManager.connect(Main.this)) {
+            checkInternet();
+        }
+    }
+
+    private void doRouterDial() {
         setFootView("正在拨号");
         if (ShanXunManager.doDial()) {
-            setFootView("正在检查网络");
-            String json = ShanXunManager.getIp();
-            if (TextUtil.isEmpty(json)) {
-                setFootView("拨号失败，请重试");
-            } else {
-                Gson gson = new Gson();
-                ipConfig = gson.fromJson(json, IpConfig.class);
-                setFootView("连接成功，IP:" + ipConfig.getIp());
-                ShanXunManager.sendHeart(this, ipConfig.getIp());
-            }
+            checkInternet();
         } else {
             setFootView("拨号失败");
+        }
+    }
+
+    private void checkInternet() {
+        setFootView("正在检查网络");
+        String json = ShanXunManager.getIp();
+        if (TextUtil.isEmpty(json)) {
+            setFootView("拨号失败，请重试");
+        } else {
+            Gson gson = new Gson();
+            ipConfig = gson.fromJson(json, IpConfig.class);
+            setFootView("连接成功，IP:" + ipConfig.getIp());
+            ShanXunManager.sendHeart(this, ipConfig.getIp());
         }
     }
 
