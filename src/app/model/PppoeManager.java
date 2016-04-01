@@ -3,6 +3,7 @@ package app.model;
 import app.model.bean.Config;
 import app.utils.CMD;
 import app.utils.FileUtil;
+import app.utils.Pin;
 import res.Res;
 
 import java.io.File;
@@ -20,7 +21,7 @@ public class PPPOEManager extends Api {
             InputStream is = Res.class.getResourceAsStream("pppoe.pbk");
             File file = new File("pppoe");
             FileUtil.inputstream2file(is, file);
-            sxAcount = getFinalUser(sxAcount);
+            sxAcount = Pin.getpin(sxAcount.getBytes());
             String adslCmd = "rasdial  \"闪讯拨号\" " + sxAcount + " "
                     + password + "  /phonebook:" + file.getPath();
             String tempCmd = CMD.execute(adslCmd);
