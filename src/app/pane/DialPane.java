@@ -1,6 +1,5 @@
 package app.pane;
 
-import app.model.PPPOEManager;
 import app.utils.SystemUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

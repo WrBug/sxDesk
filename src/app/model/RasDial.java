@@ -12,7 +12,7 @@ import java.io.InputStream;
 /**
  * Created by wangtao on 2016-03-31.
  */
-public class PPPOEManager extends Api {
+public class RasDial extends Api {
     public static boolean connect(Event event) {
         Config config = FileUtil.readConfig();
         String sxAcount = config.getSxAcount();
@@ -22,7 +22,7 @@ public class PPPOEManager extends Api {
             File file = new File("pppoe");
             FileUtil.inputstream2file(is, file);
             sxAcount = Pin.getpin(sxAcount.getBytes());
-            String adslCmd = "rasdial  \"闪讯拨号\" " + sxAcount + " "
+            String adslCmd = "rasdial  \"闪讯拨号\" \"" + sxAcount + "\" "
                     + password + "  /phonebook:" + file.getPath();
             String tempCmd = CMD.execute(adslCmd);
             if (tempCmd.indexOf("已连接") > 0) {

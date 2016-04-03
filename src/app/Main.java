@@ -2,7 +2,7 @@ package app;
 
 import app.model.Action;
 import app.model.Event;
-import app.model.PPPOEManager;
+import app.model.RasDial;
 import app.model.ShanXunManager;
 import app.model.bean.IpConfig;
 import app.pane.AboutPane;
@@ -200,7 +200,7 @@ public class Main extends Application implements Event {
 
     private void doPPPOEDial() {
         setFootView("正在建立连接.");
-        if (PPPOEManager.connect(Main.this)) {
+        if (RasDial.connect(Main.this)) {
             checkInternet();
         }
     }
