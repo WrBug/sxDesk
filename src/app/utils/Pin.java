@@ -98,8 +98,8 @@ public class Pin {
 			 PIN = new byte[29];
 		}
 		else PIN = new byte[30];
-		PIN[0] = '\r';
-		PIN[1] = '\n';
+		PIN[0] =(byte)0x0d;
+		PIN[1] =(byte)0x0a;
 		for(int k=2;k<8;k++)
 		{
 			PIN[k]=PIN27[k-2];

@@ -3,3 +3,4 @@ config.json
 exception.log
 .idea/workspace.xml
 pppoe
+rdial.exe

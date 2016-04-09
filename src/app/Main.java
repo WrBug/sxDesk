@@ -161,8 +161,6 @@ public class Main extends Application implements Event {
             trayIcon.setToolTip(Constant.APP_NAME);
             tray.add(trayIcon);
             trayIcon.addMouseListener(sj);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -200,7 +198,7 @@ public class Main extends Application implements Event {
 
     private void doPPPOEDial() {
         setFootView("正在建立连接.");
-        if (RasDial.connect(Main.this)) {
+        if (RasDial.connect(this)) {
             checkInternet();
         }
     }
@@ -234,6 +232,6 @@ public class Main extends Application implements Event {
 
     @Override
     public void appendCount(int sendTotal, int successTotal) {
-        setFootView("连接成功，IP:" + ipConfig.getIp() + " 已发送" + sendTotal + "次,成功" + successTotal + "次");
+        setFootView("连接成功，发送心跳"+successTotal+"次");
     }
 }
