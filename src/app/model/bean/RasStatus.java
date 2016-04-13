@@ -1,11 +1,13 @@
 package app.model.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/4/9.
  */
-public class RasStatus {
+public class RasStatus implements Serializable{
     private int status;
-    private int errorCode;
+    private int errorcode;
 
     public int getStatus() {
         return status;
@@ -15,12 +17,12 @@ public class RasStatus {
         this.status = status;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getErrorcode() {
+        return errorcode;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setErrorcode(int errorCode) {
+        this.errorcode = errorCode;
     }
     public boolean isConnected(){
         return status==1;

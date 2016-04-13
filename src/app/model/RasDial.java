@@ -31,11 +31,12 @@ public class RasDial extends Api {
             tempCmd = tempCmd.substring(0, tempCmd.lastIndexOf("}") + 1);
             Gson gson = new Gson();
             RasStatus status = gson.fromJson(tempCmd, RasStatus.class);
+            file.delete();
             if (status.isConnected()) {
                 event.setFootView("已成功建立连接.");
                 return true;
             } else {
-                event.setFootView("拨号失败,代码"+status.getErrorCode());
+                event.setFootView("拨号失败,代码"+status.getErrorcode());
             }
         } catch (Exception e) {
             event.setFootView("拨号失败");
