@@ -12,6 +12,17 @@ public class Config implements Serializable {
     private String routerUsername;
     private String routerPassword;
     private Boolean sendHeart;
+    private String wifiName;
+    private String wifiPswd;
+    private Notice notice;
+
+    public Notice getNotice() {
+        return notice;
+    }
+
+    public void setNotice(Notice notice) {
+        this.notice = notice;
+    }
 
     public Boolean getSendHeart() {
         return sendHeart;
@@ -63,5 +74,21 @@ public class Config implements Serializable {
 
     public void setRouterPassword(String routerPassword) {
         this.routerPassword = routerPassword;
+    }
+
+    public String getWifiName() {
+        return wifiName;
+    }
+
+    public void setWifiName(String wifiName) {
+        this.wifiName = wifiName;
+    }
+
+    public String getWifiPswd() {
+        return wifiPswd;
+    }
+
+    public void setWifiPswd(String wifiPswd) {
+        this.wifiPswd = wifiPswd;
     }
 }

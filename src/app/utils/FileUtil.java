@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.model.bean.Notice;
 import com.google.gson.Gson;
 import app.model.bean.Config;
 
@@ -54,6 +55,15 @@ public class FileUtil {
         if (config.getSendHeart() != null) {
             g.setSendHeart(config.getSendHeart());
         }
+        if (config.getWifiName() != null) {
+            g.setWifiName(config.getWifiName());
+        }
+        if (config.getWifiPswd() != null) {
+            g.setWifiPswd(config.getWifiPswd());
+        }
+        if (config.getNotice() != null) {
+            g.setNotice(config.getNotice());
+        }
         try {
             Gson gson = new Gson();
             File file = new File("config.json");
@@ -66,6 +76,16 @@ public class FileUtil {
             fout.close();
         } catch (Exception e) {
         }
+    }
+
+    public static Notice readNotice() {
+        return readConfig().getNotice();
+    }
+
+    public static void writeNotice(Notice notice) {
+        Config config = new Config();
+        config.setNotice(notice);
+        writeConfig(config);
     }
 
     public static void inputstream2file(InputStream ins, File file) {

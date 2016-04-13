@@ -57,4 +57,8 @@ public class ShanXunManager extends Api {
             }
         }
     }
+
+    public static String getNotice() {
+        return get("/notice/getDeskNotice",null);
+    }
 }
