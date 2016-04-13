@@ -11,12 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
+import java.io.IOException;
 
 /**
  * Created by wangtao on 2016-03-28.
@@ -28,6 +30,7 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
     Config config;
     private Event event;
     Button btn;
+    Hyperlink link;
     private WifiPane(Event event) {
         this.event = event;
         config = FileUtil.readConfig();
@@ -46,6 +49,15 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
         wifiPswdText.setText(config.getWifiPswd());
         wifiPswdText.setCache(true);
         add(wifiPswdText, 1, 2, 2, 1);
+        link=new Hyperlink("使用教程>>");
+        link.setOnAction(event1 -> {
+            try {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler http://wifi.mandroid.cn");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        add(link,0,3,2,1);
         btn = new Button("开启");
         btn.setOnAction(this);
         HBox hbBtn = new HBox(10);
@@ -89,8 +101,13 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
     private void stopWifi() {
         try {
             String info=CMD.execute("netsh wlan stop hostednetwork");
+            System.out.println(info);
+            if(info.contains("已停止")){
+                event.setFootView(info.substring(0,info.lastIndexOf("。")+1));
+                btn.setText("开启");
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            event.setFootView("关闭失败");
         }
     }
 
@@ -108,7 +125,7 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
                 event.setFootView("开启失败，请检查无线模块");
                 return;
             }
-            event.setFootView("已开启");
+            event.setFootView(info.substring(0,info.lastIndexOf("。")+1));
             btn.setText("关闭");
         } catch (Exception e) {
             event.setFootView("开启失败，请检查无线模块");
