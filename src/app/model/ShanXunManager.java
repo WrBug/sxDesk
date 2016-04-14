@@ -59,6 +59,10 @@ public class ShanXunManager extends Api {
     }
 
     public static String getNotice() {
-        return get("/notice/getDeskNotice",null);
+        return get("/notice/getDeskNotice", null);
     }
+    public static String getVersion() {
+        return get("/version/checkDeskAppVersion", null);
+    }
+
 }

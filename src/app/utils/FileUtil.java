@@ -12,8 +12,9 @@ import java.io.*;
 public class FileUtil {
     public static Config readConfig() {
         String res = "";
+        File file = null;
         try {
-            File file = new File("config.json");
+            file = new File("config.json");
             if (!file.exists()) {
                 file.createNewFile();
                 return new Config();
@@ -29,7 +30,13 @@ public class FileUtil {
         }
         if (!TextUtil.isEmpty(res)) {
             Gson gson = new Gson();
-            Config config = gson.fromJson(res, Config.class);
+            Config config = null;
+            try {
+                config = gson.fromJson(res, Config.class);
+            } catch (Exception e) {
+                file.delete();
+                return new Config();
+            }
             return config;
         }
         return new Config();

@@ -51,11 +51,7 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
         add(wifiPswdText, 1, 2, 2, 1);
         link=new Hyperlink("使用教程>>");
         link.setOnAction(event1 -> {
-            try {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler http://wifi.mandroid.cn");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+           CMD.loadUrl("http://wifi.mandroid.cn");
         });
         add(link,0,3,2,1);
         btn = new Button("开启");

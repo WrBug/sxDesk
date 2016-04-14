@@ -1,6 +1,7 @@
 package app.utils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -17,5 +18,12 @@ public class CMD {
             sbCmd.append(line + "\n");
         }
         return sbCmd.toString();
+    }
+    public static void loadUrl(String url){
+        try {
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
