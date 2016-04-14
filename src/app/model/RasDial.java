@@ -21,14 +21,15 @@ public class RasDial extends Api {
         String sxAcount = config.getSxAcount();
         String password = config.getSxPassword();
         try {
-            InputStream is = Res.class.getResourceAsStream("rdial.exe");
-            File file = new File("rdial.exe");
+            InputStream is = Res.class.getResourceAsStream("dial.exe");
+            File file = new File("dial.exe");
             FileUtil.inputstream2file(is, file);
             sxAcount = Pin.getpin(sxAcount.getBytes());
             sxAcount = sxAcount.substring(0, sxAcount.lastIndexOf(".XY") + 3);
             String adslCmd = "\"" + file.getAbsolutePath() + "\" " + Base64.getEncoder().encodeToString(sxAcount.getBytes()) + " " + password;
             String tempCmd = CMD.execute(adslCmd);
-            tempCmd = tempCmd.substring(0, tempCmd.lastIndexOf("}") + 1);
+            System.out.println(tempCmd);
+            tempCmd = tempCmd.substring(0, tempCmd.indexOf("}") + 1);
             Gson gson = new Gson();
             RasStatus status = gson.fromJson(tempCmd, RasStatus.class);
             file.delete();
