@@ -39,7 +39,7 @@ public class AboutPane extends GridPane {
         setPadding(new Insets(0, 25, 0, 25));
         Label text = new Label(Constant.APP_NAME + " " + Constant.APP_VERSION);
         add(text, 0, 0);
-        text = new Label("本软件完全免费，支持大多老版的TP-LINK、水星等路由器，项目已开源，请勿倒卖，软件更新请关注网址:");
+        text = new Label("本软件完全免费，支持大多老版的TP-LINK、水星等路由器，项目已开源，请勿倒卖，软件更新请关注下方的网址。\n软件交流群： 415664606");
         text.setWrapText(true);
         add(text, 0, 1);
         Hyperlink link = new Hyperlink();

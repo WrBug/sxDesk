@@ -41,7 +41,7 @@ public class WifiPane extends GridPane implements EventHandler<ActionEvent> {
         Label userName = new Label("WIFI  名:");
         add(userName, 0, 1);
         wifiNameText = new TextField();
-        wifiNameText.setText(TextUtil.isEmpty(config.getWifiName()) ? "shanxunWifi" : config.getWifiName());
+        wifiNameText.setText(TextUtil.isEmpty(config.getWifiName()) ? "www.mandroid.cn" : config.getWifiName());
         add(wifiNameText, 1, 1, 2, 1);
         Label pw = new Label("WIFI密码:");
         add(pw, 0, 2);
