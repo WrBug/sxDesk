@@ -1,6 +1,7 @@
 package app.model;
 
 import app.model.bean.Config;
+import app.utils.Constant;
 import app.utils.FileUtil;
 import app.utils.Pin;
 import app.utils.Sto16;
@@ -16,15 +17,17 @@ import java.util.Map;
  * Created by Administrator on 2016/3/28.
  */
 public class Api {
-    protected static String API_URL = "http://sx.mandroid.cn/index.php";
+    protected static String API_URL = "http://localhost:8081";
 
-    protected static String post(String u, Map<String, Object> params) {
+    protected static FetchResult post(String u, Map<String, Object> params) {
         try {
             URL url = new URL(API_URL + u);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
             connection.setDoOutput(true);
+            connection.setRequestProperty("appName", "deskApp");
+            connection.setRequestProperty("version", Constant.APP_VERSION);
             OutputStream outputStream = connection
                     .getOutputStream();
             outputStream.write(getParams(params).getBytes());
@@ -36,7 +39,7 @@ public class Api {
                 while ((a = reader.read()) != -1) {
                     buffer.append((char) a);
                 }
-                return buffer.toString();
+                return FetchResult.instance(buffer.toString());
             }
             return null;
         } catch (Exception e) {
@@ -45,11 +48,13 @@ public class Api {
         }
     }
 
-    protected static String get(String u, Map<String, Object> params) {
+    protected static FetchResult get(String u, Map<String, Object> params) {
         try {
             URL url = new URL(API_URL + u + "?" + getParams(params));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            connection.setRequestProperty("appName", "deskApp");
+            connection.setRequestProperty("version", Constant.APP_VERSION);
             connection.connect();
             if (connection.getResponseCode() == 200) {
                 InputStreamReader reader = new InputStreamReader(connection.getInputStream());
@@ -58,7 +63,7 @@ public class Api {
                 while ((a = reader.read()) != -1) {
                     buffer.append((char) a);
                 }
-                return buffer.toString();
+                return FetchResult.instance(buffer.toString());
             }
             return null;
         } catch (Exception e) {

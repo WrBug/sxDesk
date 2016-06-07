@@ -212,7 +212,7 @@ public class Main extends Application implements Event {
 
     private void doPPPOEDial() {
         setFootView("正在建立连接.");
-        if (RasDial.connect(this)) {
+        if (true) {
             checkInternet();
         }
     }
@@ -227,16 +227,18 @@ public class Main extends Application implements Event {
     }
 
     private void checkInternet() {
-        setFootView("正在检查网络");
-        String json = ShanXunManager.getIp();
-        if (TextUtil.isEmpty(json)) {
-            setFootView("拨号失败，请重试");
-        } else {
-            Gson gson = new Gson();
-            ipConfig = gson.fromJson(json, IpConfig.class);
-            setFootView("连接成功，IP:" + ipConfig.getIp());
-            ShanXunManager.sendHeart(this, ipConfig.getIp());
-        }
+        ShanXunManager.sendHeart(this);
+//
+//        setFootView("正在检查网络");
+//        String json = ShanXunManager.getIp();
+//        if (TextUtil.isEmpty(json)) {
+//            setFootView("拨号失败，请重试");
+//        } else {
+//            Gson gson = new Gson();
+//            ipConfig = gson.fromJson(json, IpConfig.class);
+//            setFootView("连接成功，IP:" + ipConfig.getIp());
+//            ShanXunManager.sendHeart(this);
+//        }
     }
 
     @Override

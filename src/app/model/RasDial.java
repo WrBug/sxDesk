@@ -21,7 +21,7 @@ public class RasDial extends Api {
         String sxAcount = config.getSxAcount();
         String password = config.getSxPassword();
         try {
-            InputStream is = Res.class.getResourceAsStream("dial.exe");
+            InputStream is = Res.class.getResourceAsStream("dial");
             File file = new File("dial.exe");
             FileUtil.inputstream2file(is, file);
             sxAcount = Pin.getpin(sxAcount.getBytes());

@@ -1,5 +1,6 @@
 package app.pane;
 
+import app.model.FetchResult;
 import app.model.ShanXunManager;
 import app.model.bean.Version;
 import app.utils.CMD;
@@ -54,10 +55,10 @@ public class AboutPane extends GridPane {
     }
 
     private void checkVersion(Event event) {
-        String verStr = ShanXunManager.getVersion();
-        if (!TextUtil.isEmpty(verStr)) {
-            Version version = new Gson().fromJson(verStr, Version.class);
-            if ((Constant.APP_NAME + " " + Constant.APP_VERSION).equals(version.getVersion())) {
+        FetchResult verStr = ShanXunManager.getVersion();
+        if (verStr.isSuccess()) {
+            Version version = new Gson().fromJson(verStr.getData(), Version.class);
+            if (Constant.APP_VERSION.equals(version.getVersion())) {
                 event.setFootView("已是最新版本");
             } else {
                 event.setFootView("软件有更新");

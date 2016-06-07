@@ -3,7 +3,7 @@ package app.model;
 import app.model.bean.Config;
 import app.model.bean.HeartPack;
 import app.utils.FileUtil;
-import app.utils.Udp;
+import app.utils.UDP;
 import com.google.gson.Gson;
 
 import java.net.SocketException;
@@ -23,31 +23,26 @@ public class ShanXunManager extends Api {
         return dial();
     }
 
-    public static String getIp() {
-        return get("/heart/GetIp", null);
-    }
+//    public static String getIp() {
+//        return get("/heart/GetIp", null);
+//    }
 
-    public static void sendHeart(Event event, String ip) {
+    public static void sendHeart(Event event) {
         Config config = FileUtil.readConfig();
         if (!config.getSendHeartBoolean()) {
             return;
         }
         Map<String, Object> map = new HashMap<>();
         map.put("user", config.getSxAcount());
-        map.put("ip", ip);
         while (true) {
             sendTotal++;
-            String data = post("/heart/getByDeskApp", map);
-            heartPack = new Gson().fromJson(data, HeartPack.class);
-            if (heartPack.getStatus() == 200) {
-                String packData = heartPack.getPackData();
-                String sendIp = heartPack.getSendIp();
+            FetchResult data = post("/getHeart", map);
+            if (data.isSuccess()) {
+                heartPack = new Gson().fromJson(data.getData(), HeartPack.class);
+                String packData = heartPack.getData();
+                String sendIp = heartPack.getAddress();
                 int port = heartPack.getPort();
-                try {
-                    Udp.instance(sendIp, port, Base64.getDecoder().decode(packData)).send();
-                } catch (SocketException e) {
-                    event.setFootView("error");
-                }
+                UDP.send(sendIp, port, Base64.getDecoder().decode(packData));
             }
             event.appendCount(sendTotal, successTotal);
             try {
@@ -58,11 +53,12 @@ public class ShanXunManager extends Api {
         }
     }
 
-    public static String getNotice() {
-        return get("/notice/getDeskNotice", null);
+    public static FetchResult getNotice() {
+        return get("/getNotice", null);
     }
-    public static String getVersion() {
-        return get("/version/checkDeskAppVersion", null);
+
+    public static FetchResult getVersion() {
+        return get("/getVersion", null);
     }
 
 }

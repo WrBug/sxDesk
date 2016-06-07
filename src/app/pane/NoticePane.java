@@ -1,6 +1,7 @@
 package app.pane;
 
 import app.model.Event;
+import app.model.FetchResult;
 import app.model.ShanXunManager;
 import app.model.bean.Notice;
 import app.utils.FileUtil;
@@ -45,9 +46,9 @@ public class NoticePane extends GridPane {
 
     private void getWebData() {
         new Thread(() -> {
-            String no = ShanXunManager.getNotice();
-            if (!TextUtil.isEmpty(no)) {
-                notice = new Gson().fromJson(no.substring(no.indexOf("{")), Notice.class);
+            FetchResult fetchResult = ShanXunManager.getNotice();
+            if (fetchResult.isSuccess()) {
+                notice = new Gson().fromJson(fetchResult.getData(), Notice.class);
                 FileUtil.writeNotice(notice);
             } else {
                 notice.setContent("暂无公告");

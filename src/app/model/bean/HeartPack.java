@@ -4,33 +4,24 @@ package app.model.bean;
  * Created by wangtao on 2016-03-29.
  */
 public class HeartPack {
-    int status;
-    String packData;
-    String sendIp;
+    String data;
+    String address;
     int port;
 
-    public int getStatus() {
-        return status;
+    public String getData() {
+        return data;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public String getPackData() {
-        return packData;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPackData(String packData) {
-        this.packData = packData;
-    }
-
-    public String getSendIp() {
-        return sendIp;
-    }
-
-    public void setSendIp(String sendIp) {
-        this.sendIp = sendIp;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getPort() {

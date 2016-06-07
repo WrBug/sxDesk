@@ -28,8 +28,8 @@ Query:
     {
     	"status": 200,
     	"data": {
-    		"packData": "U04AYwOCQpY85mPaVnecguWKlDde4wIAB8CoAQEDAAwxLjIuMTguMjgUACNiNTcyYjI1NjEwODA4ZGE1N2QyY2Y0YWEyMGViZmE2ORIAB1br6zcBABAxMjM0NTZAQUJDLlhZ",  //base64encode
-    		"sendIp": "115.239.134.167",
+    		"data": "U04AYwOCQpY85mPaVnecguWKlDde4wIAB8CoAQEDAAwxLjIuMTguMjgUACNiNTcyYjI1NjEwODA4ZGE1N2QyY2Y0YWEyMGViZmE2ORIAB1br6zcBABAxMjM0NTZAQUJDLlhZ",  //base64encode
+    		"address": "115.239.134.167",
     		"sendPort": 8080
     	}
     }
